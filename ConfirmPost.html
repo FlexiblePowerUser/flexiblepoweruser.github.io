@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>~ Post Preview ~</title>
+  <style>
+    * {
+      font-family: 'Ubuntu', Verdana, Tahoma, sans-serif;
+    }
+    body {
+      background-color: #360000;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    button {
+      background-color: #800000;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+    button:hover {
+      background-color: #b30000;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>You are leaving the previous area to view an e621 post.</h1>
+  <div id="preview"></div>
+  <p>...</p>
+  <div>
+    <button id="yesBtn">Continue</button>
+    <button onclick="window.close(); window.location.assign('https:\/\/google.com')">Nevermind</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const postId = params.get("id");
+
+    // Replace underscores with spaces for nicer display
+    const toWords = s => s.replace(/_/g, " ");
+
+    (async function () {
+      const h1 = document.querySelector("p");
+
+      if (!postId) {
+        h1.innerHTML = "No post ID attached.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://e621.net/posts/${postId}.json`);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const post = data.post || {};
+
+        // Add preview image
+        if (post.preview && post.preview.url) {
+          const img = document.createElement("img");
+          img.src = post.preview.url;
+          img.alt = "Post preview";
+          img.style.maxWidth = "400px"; // adjust size as you like
+          img.style.borderRadius = "8px";
+          document.getElementById("preview").appendChild(img);
+        }
+
+        // Artist + character text
+        const artists = (post.tags?.artist || []).map(toWords);
+        const characters = (post.tags?.character || []).map(toWords);
+        const artistText = artists.length ? (artists.length === 1 ? artists[0] : artists.join(", ")) : "unknown artist";
+        const charText = characters.length ? characters.join(", ") : `post ${post.id || postId}`;
+        const pretty = `${charText} created by ${artistText}.`;
+        h1.innerHTML = `${pretty}`;
+      } catch (e) {
+        console.error(e);
+        h1.innerHTML = `No post info found.`;
+      }
+
+    })();
+
+    document.getElementById("yesBtn").addEventListener("click", function () {
+      if (postId) {
+        window.location.href = "https://e621.net/posts/" + postId;
+      } else {
+        alert("No post ID found in the URL.");
+        window.close();
+      }
+    });
+  </script>
+</body>
+</html>
