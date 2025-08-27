@@ -36,6 +36,13 @@
     button:hover {
       background-color: #b30000;
     }
+    img {
+      filter: blur(4px);
+      transition: 0.5s;
+    }
+    img:hover {
+      filter: blur(0px);
+    }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,8 +87,8 @@
         if (post.preview && post.preview.url) {
           const img = document.createElement("img");
           img.src = post.preview.url;
-          img.alt = "Post preview";
-          img.style.maxWidth = "400px"; // adjust size as you like
+          img.alt = "~ Image Preview ~";
+          img.style.maxWidth = "500px";
           img.style.borderRadius = "8px";
           document.getElementById("preview").appendChild(img);
         }
