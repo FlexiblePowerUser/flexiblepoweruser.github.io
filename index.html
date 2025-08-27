@@ -6,7 +6,7 @@
     <script>
       const params = new URLSearchParams(window.location.search);
       const postId = params.get("id");
-      window.location.assign(`/ConfirmPost?=${postId}`);
+      window.location.assign(`/Post?id=${postId}`);
     </script>
     <script>
       window.close();
