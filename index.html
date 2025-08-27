@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>~ Flexible Redirector ~</title>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get("id");
+      window.location.assign(`/ConfirmPost?=${postId}`);
+    </script>
+    <script>
+      window.close();
+    </script>
+    </head>
+</html>
