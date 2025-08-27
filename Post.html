@@ -44,7 +44,7 @@
 <body>
   <h1>You are leaving the previous area to view an e621 post.</h1>
   <div id="preview"></div>
-  <p>...</p>
+  <p>Getting post info...</p>
   <div>
     <button id="yesBtn">Continue</button>
     <button onclick="window.close(); window.location.assign('https:\/\/google.com')">Nevermind</button>
@@ -61,6 +61,11 @@
       const h1 = document.querySelector("p");
 
       if (!postId) {
+        h1.innerHTML = "No post ID attached.";
+        return;
+      }
+
+      if (postId === "null") {
         h1.innerHTML = "No post ID attached.";
         return;
       }
