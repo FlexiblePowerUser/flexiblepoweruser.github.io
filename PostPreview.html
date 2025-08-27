@@ -61,7 +61,7 @@
 </head>
 <body>
   <h3>The post below may contain adult content, so it is blurred. (hover over it to unblur)</h3>
-  <div id="preview" style="width: 90%; height: auto; max-height: 90%;"></div>
+  <div id="preview" style="width: 90%; margin: auto; text-align: center;"></div>
   <p>Getting post info...</p>
   <div>
   </div>
@@ -90,14 +90,15 @@
         const data = await res.json();
         const post = data.post || {};
         
-        if (post.preview && post.preview.url) {
+        if (post.sample && post.sample.url) {
           const img = document.createElement("img");
-          img.src = post.preview.url;
+          img.src = post.sample.url;
           img.alt = "~ Image Preview ~";
           img.style.borderRadius = "8px";
-          img.style.width = "100%";
-          img.style.height = "auto";
           img.style.maxWidth = "100%";
+          img.style.maxHeight = "90vh";
+          img.style.height = "auto";
+          img.style.width = "auto";
           document.getElementById("preview").appendChild(img);
         }
         
