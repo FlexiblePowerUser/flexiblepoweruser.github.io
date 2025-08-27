@@ -38,12 +38,12 @@
       background-color: #b30000;
     }
     img {
+      object-fit: contain;
       filter: blur(8px);
       transition: 0.3s;
     }
     img:hover {
       filter: blur(0px);
-      content: normal;
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,7 +91,8 @@
           const img = document.createElement("img");
           img.src = post.preview.url;
           img.alt = "~ Image Preview ~";
-          img.style.maxWidth = "500px";
+          img.style.maxWidth = "512px";
+          img.style.maxHeight = "618px";
           img.style.borderRadius = "8px";
           document.getElementById("preview").appendChild(img);
         }
