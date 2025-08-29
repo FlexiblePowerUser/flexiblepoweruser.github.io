@@ -72,8 +72,7 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const postId = params.get("id");
-
-    // Replace underscores with spaces for nicer display
+    
     const toWords = s => s.replace(/_/g, " ");
 
     (async function () {
@@ -94,8 +93,7 @@
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
         const post = data.post || {};
-
-        // Add preview image
+        
         if (post.preview && post.preview.url) {
           const img = document.createElement("img");
           img.src = post.preview.url;
@@ -105,8 +103,7 @@
           img.style.borderRadius = "8px";
           document.getElementById("preview").appendChild(img);
         }
-
-        // Artist + character text
+        
         const artists = (post.tags?.artist || []).map(toWords);
         const characters = (post.tags?.character || []).map(toWords);
         const artistText = artists.length ? (artists.length === 1 ? artists[0] : artists.join(", ")) : "unknown artist";
