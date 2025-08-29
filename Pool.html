@@ -19,8 +19,12 @@
       margin: 0;
       text-align: center;
     }
-    h1 { margin: 0; }
-    h3 { margin-bottom: 20px; }
+    h1 {
+      margin: 0;
+    }
+    h3 {
+      margin-bottom: 20px;
+    }
     button {
       background-color: #800000;
       color: white;
@@ -32,15 +36,20 @@
       cursor: pointer;
       transition: 0.3s;
     }
-    #yesBtn { background-color: #0051a0; }
-    #noBtn { background-color: #850050; }
-    button:hover { background-color: #b30000; }
+    #yesBtn {
+      background-color: #0051a0;
+    }
+    #noBtn {
+      background-color: #850050;
+    }
+    button:hover {
+      background-color: #b30000;
+    }
     img {
       object-fit: contain;
       filter: blur(8px);
       transition: 0.3s;
     }
-    img:hover { filter: blur(0px); }
     #poolButtons {
       margin-top: 15px;
     }
@@ -48,15 +57,17 @@
 </head>
 <body>
   <h1>You are leaving the previous area to view an e621 pool.</h1>
-  <h3>The post below may contain adult content, so it is blurred. (hover to unblur)</h3>
+  <h3>The post below may contain adult content, so it is blurred. <a href="#" onclick="event.preventDefault(); const img=document.querySelector('#preview img'); if(img) img.style.filter='blur(0)';">(click here to unblur)</a></h3>
   <div id="preview"></div>
-  <p>Getting pool info...</p>
+  <p id="info">Getting pool info...</p>
   <div>
-    <button id="yesBtn">Continue to Pool</button>
+    <button id="yesBtn">Continue</button>
     <button id="noBtn" onclick="window.close(); window.location.assign('https://google.com')">Nevermind</button>
   </div>
+  <p>
+    You can use the numbered buttons below to preview posts in this pool.
+  </p>
   <div id="poolButtons"></div>
-
   <script>
     const params = new URLSearchParams(window.location.search);
     const poolId = params.get("id");
@@ -64,7 +75,7 @@
     const toWords = s => s.replace(/_/g, " ");
 
     const previewDiv = document.getElementById("preview");
-    const infoP = document.querySelector("p");
+    const infoP = document.getElementById("info");
     const poolButtonsDiv = document.getElementById("poolButtons");
 
     async function loadPost(postId) {
